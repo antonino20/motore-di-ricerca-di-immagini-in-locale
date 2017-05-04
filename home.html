@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="pagina de prueba">
+<meta name="keywords" content="ajax, javascript avanzado, php5">
+<meta name="viewport"  content="width=device-width, initial-scale=1, maximum-scale=1" >
+
+</head>
+<body>
+
+  <input type="text" id="parola">
+ 
+  <button onclick = "filtra_risultati()">pronto</button>
+ 
+  <nav id="menu-verticale">
+
+     <ul id= "elenco-elementi" >
+ 	    <img src="iconos/menu/nav-icon.png" id="icono-menu">
+ 	     <div id="items" id="elementi">
+ 		      <li>cartella1</li>
+ 		      <li>cartella2</li>
+ 		      <li>cartella3</li>
+ 	     </div>
+     </ul>
+  </nav>
+ 
+ <div id="dati-ricevuti"></div>
+
+</body>
+
+<script type="text/javascript">
+
+ 	ajax = new XMLHttpRequest();
+ 	output = document.getElementById('dati-ricevuti');
+
+ 	
+    function filtra_risultati(){
+    	filtro = document.getElementById('parola').value;
+
+  
+    	ajax.open("get", "sql.php?filtro="+filtro, true);
+    	ajax.send();
+    	ajax.onreadystatechange = function(){
+    		if(ajax.readyState == 4 && ajax.status == 200){
+    			texto = ajax.responseText;
+    			output.innerHTML= texto;
+    		}
+    	}
+    	output.innerHTML = filtro;
+    }
+
+ 	elenco = document.getElementById("elenco-elementi");
+ 	elenco.addEventListener("click", function(e){
+ 		
+ 		consulta = e.target.innerText;
+
+
+ 		ajax.open("get", "listdir.php?consulta="+consulta, true);
+ 		ajax.setRequestHeader("contentType", "application/x-www-form-urlencoded");
+
+
+ 		ajax.send();
+
+        ajax.onreadystatechange=function() {  
+         if (ajax.readyState==4 && ajax.status==200) {
+          texto = ajax.responseText;
+          output.innerHTML= texto;
+
+
+
+          } 
+       }
+ 	}, false)
+
+</script>
