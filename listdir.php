@@ -1,11 +1,10 @@
 <?php 
-$peticion = $_GET['consulta'];
-// $directorio = opendir($peticion);
+$query = $_GET['query'];
 
-foreach(glob("$peticion/*.jpg") as $filename){
+foreach(glob("$query/*.jpg") as $filename){
  echo "<img src='$filename' class='responsive'>";
 }
 
 
-echo $peticion;
+echo $query;
 
