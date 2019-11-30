@@ -1,34 +1,32 @@
 <?php
 
-  $consulta = $_GET['filtro'];
+  $query = $_GET['filtro'];
   $conexion = mysql_connect('localhost', 'root', 'admin') or die(mysql_error());
   mysql_select_db('test', $conexion) or die(mysql_error());
 
-  $encontrado = false;
+$find = false;
 
+$get_tables = mysql_query("SHOW TABLES");
+  while($table = mysql_fetch_array($get_tables)){
+   $elem = $table[0];
+   $get_fields = mysql_query("SHOW FIELDS FROM $elem");
 
+    while($field = mysql_fetch_array($get_fields) ){
 
-  $obtener_tablas = mysql_query("SHOW TABLES");
-  while($tabla = mysql_fetch_array($obtener_tablas)){
-   $elemento = $tabla[0];
-   $obtener_campos = mysql_query("SHOW FIELDS FROM $elemento");
+  	  $field_elem = $field[0];
 
-    while($campo = mysql_fetch_array($obtener_campos) ){
-
-  	  $elemento_campo = $campo[0];
-
-  	   $sql = "SELECT * FROM $elemento WHERE $elemento_campo='$consulta' ";
+  	   $sql = "SELECT * FROM $elem WHERE $field_elem='$query' ";
   	   $query = mysql_query($sql);
 
 
-  	    while($fila = mysql_fetch_array($query)){
-  		echo $ruta= $fila['path'];
-  		echo "<img src='$ruta' class='responsive'>";
-  		echo "la ruta es ".$ruta;
-  		$encontrado = true;
+  	    while($row = mysql_fetch_array($query)){
+  		echo $path= $row['path'];
+  		echo "<img src='$path' class='responsive'>";
+  		echo "path: ".$path;
+  		$find = true;
   	}
   }
 }
-if(!$encontrado){echo "ningun resultdado" ;}
+if(!$find){echo "0result" ;}
 
 ?>
