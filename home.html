@@ -7,54 +7,54 @@
 </head>
 <body>
 
-  <input type="text" id="parola">
+  <input type="text" id="keyword">
  
-  <button onclick = "filtra_risultati()">pronto</button>
+  <button onclick = "filter_results()">send</button>
  
-  <nav id="menu-verticale">
+  <nav id="vertical-menu">
 
-     <ul id= "elenco-elementi" >
+     <ul id= "listElements" >
  	    <img src="iconos/menu/nav-icon.png" id="icono-menu">
- 	     <div id="items" id="elementi">
- 		      <li>cartella1</li>
- 		      <li>cartella2</li>
- 		      <li>cartella3</li>
+ 	     <div id="items" id="elems">
+ 		      <li>folder1</li>
+ 		      <li>folder2</li>
+ 		      <li>folder3</li>
  	     </div>
      </ul>
   </nav>
  
- <div id="dati-ricevuti"></div>
+ <div id="receivedData"></div>
 
 </body>
 
 <script type="text/javascript">
 
  	ajax = new XMLHttpRequest();
- 	output = document.getElementById('dati-ricevuti');
+ 	output = document.getElementById('received data');
 
  	
-    function filtra_risultati(){
-    	filtro = document.getElementById('parola').value;
+    function filter_results(){
+    	filter = document.getElementById('keyword').value;
 
   
-    	ajax.open("get", "sql.php?filtro="+filtro, true);
+    	ajax.open("get", "sql.php?filter="+filter, true);
     	ajax.send();
     	ajax.onreadystatechange = function(){
     		if(ajax.readyState == 4 && ajax.status == 200){
-    			texto = ajax.responseText;
-    			output.innerHTML= texto;
+    			text = ajax.responseText;
+    			output.innerHTML= text;
     		}
     	}
-    	output.innerHTML = filtro;
+    	output.innerHTML = filter;
     }
 
- 	elenco = document.getElementById("elenco-elementi");
- 	elenco.addEventListener("click", function(e){
+ 	le = document.getElementById("listElements");
+ 	le.addEventListener("click", function(e){
  		
- 		consulta = e.target.innerText;
+ 		query = e.target.innerText;
 
 
- 		ajax.open("get", "listdir.php?consulta="+consulta, true);
+ 		ajax.open("get", "listdir.php?query="+query, true);
  		ajax.setRequestHeader("contentType", "application/x-www-form-urlencoded");
 
 
@@ -62,8 +62,8 @@
 
         ajax.onreadystatechange=function() {  
          if (ajax.readyState==4 && ajax.status==200) {
-          texto = ajax.responseText;
-          output.innerHTML= texto;
+          text = ajax.responseText;
+          output.innerHTML= text;
 
 
 
